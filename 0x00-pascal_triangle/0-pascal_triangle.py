@@ -12,14 +12,14 @@ def pascal_triangle(n):
         n: number of rows
     """
     if n <= 0:
-        return [] #return empty list
+        return []
 
-    triangle = [[1]] #list of lists
+    triangle = [[1]] 
     while len(triangle) != n:
-        trn = triangle[-1] #last list in the triangle
-        tmpy = [1] #first element of every list
+        trn = triangle[-1]
+        tmpy = [1]
         for i in range(len(trn) - 1):
             tmpy.append(trn[i] + trn[i + 1]) 
-        tmpy.append(1) #last element of every list
-        triangle.append(tmpy) #add latest list
+        tmpy.append(1)
+        triangle.append(tmpy)
     return triangle
