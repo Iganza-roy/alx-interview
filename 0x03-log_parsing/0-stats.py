@@ -2,15 +2,14 @@
 
 import sys
 
-
 """
 a script that reads stdin line by line and computes metrics
 """
 
+
 def print_stats(status_codes, total_size):
     """
     Prints the accumulated metrics.
-    
     Args:
         status_codes (dict): A dictionary of status codes and their counts.
         total_size (int): The accumulated total file size.
@@ -20,19 +19,23 @@ def print_stats(status_codes, total_size):
         if count > 0:
             print(f"{code}: {count}")
 
+
 def process_input():
     """
-    Processes input lines from stdin, updating the status codes dictionary and total file size.
+    Processes input lines from stdin,
+    updating the status codes dictionary and total file size.
     """
     total_size = 0
-    status_codes = {code: 0 for code in ["200", "301", "400", "401", "403", "404", "405", "500"]}
+    status_codes = {code: 0 for code in [
+        "200", "301", "400", "401", "403", "404", "405", "500"
+        ]}
     line_count = 0
 
     try:
         for line in sys.stdin:
             parts = line.split()
             if len(parts) < 2:
-                continue            
+                continue
             file_size = int(parts[-1])
             status_code = parts[-2]
             total_size += file_size
