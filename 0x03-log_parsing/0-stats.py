@@ -37,7 +37,6 @@ def process_line(line, status_code_counts, total_file_size):
             status_code_counts[status_code] += 1
 
     except (IndexError, ValueError):
-        # If there's an error processing the line, skip it
         pass
 
     return status_code_counts, total_file_size
