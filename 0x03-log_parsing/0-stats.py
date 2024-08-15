@@ -3,6 +3,10 @@
 import sys
 
 
+"""
+a script that reads stdin line by line and computes metrics
+"""
+
 def print_stats(status_codes, total_size):
     """
     Prints the accumulated metrics.
@@ -16,7 +20,6 @@ def print_stats(status_codes, total_size):
         if count > 0:
             print(f"{code}: {count}")
 
-
 def process_input():
     """
     Processes input lines from stdin, updating the status codes dictionary and total file size.
@@ -29,23 +32,18 @@ def process_input():
         for line in sys.stdin:
             parts = line.split()
             if len(parts) < 2:
-                continue
-            
+                continue            
             file_size = int(parts[-1])
             status_code = parts[-2]
-
             total_size += file_size
             if status_code in status_codes:
                 status_codes[status_code] += 1
-
             line_count += 1
             if line_count % 10 == 0:
                 print_stats(status_codes, total_size)
-
     except KeyboardInterrupt:
         print_stats(status_codes, total_size)
         raise
-
     print_stats(status_codes, total_size)
 
 
