@@ -2,53 +2,71 @@
 
 import sys
 
-"""
-a script that reads stdin line by line and computes metrics
-"""
 
-
-def print_stats(status_codes, total_size):
+def print_stats(status_code_counts, total_file_size):
     """
-    Prints the accumulated metrics.
+    Print the accumulated metrics.
     Args:
-        status_codes (dict): A dictionary of status codes and their counts.
-        total_size (int): The accumulated total file size.
+        status_code_counts (dict): Dictionary containing status code counts.
+        total_file_size (int): The total size of all files.
     """
-    print(f"File size: {total_size}")
-    for code, count in sorted(status_codes.items()):
-        if count > 0:
-            print(f"{code}: {count}")
+    print("File size: {}".format(total_file_size))
+    for code in sorted(status_code_counts):
+        if status_code_counts[code] > 0:
+            print("{}: {}".format(code, status_code_counts[code]))
 
 
-def process_input():
+def process_line(line, status_code_counts, total_file_size):
     """
-    Processes input lines from stdin,
-    updating the status codes dictionary and total file size.
+    Process each line of input to extract status code and file size.
+    Args:
+        line (str): The input line.
+        status_code_counts (dict): Dictionary to store counts of status codes.
+        total_file_size (int): The running total of the file sizes.
+    Returns:
+        tuple: Updated status code counts and total file size.
     """
-    total_size = 0
-    status_codes = {code: 0 for code in [
-        "200", "301", "400", "401", "403", "404", "405", "500"
-        ]}
+    try:
+        parts = line.split()
+        file_size = int(parts[-1])
+        status_code = parts[-2]
+
+        total_file_size += file_size
+
+        if status_code in status_code_counts:
+            status_code_counts[status_code] += 1
+
+    except (IndexError, ValueError):
+        # If there's an error processing the line, skip it
+        pass
+
+    return status_code_counts, total_file_size
+
+
+def main():
+    total_file_size = 0
+    status_code_counts = {
+        "200": 0, "301": 0, "400": 0, "401": 0, "403": 0,
+        "404": 0, "405": 0, "500": 0
+        }
     line_count = 0
 
     try:
         for line in sys.stdin:
-            parts = line.split()
-            if len(parts) < 2:
-                continue
-            file_size = int(parts[-1])
-            status_code = parts[-2]
-            total_size += file_size
-            if status_code in status_codes:
-                status_codes[status_code] += 1
+            status_code_counts, total_file_size = process_line(
+                line, status_code_counts, total_file_size
+                )
             line_count += 1
-            if line_count % 10 == 0:
-                print_stats(status_codes, total_size)
+
+            if line_count == 10:
+                print_stats(status_code_counts, total_file_size)
+                line_count = 0
+
     except KeyboardInterrupt:
-        print_stats(status_codes, total_size)
-        raise
-    print_stats(status_codes, total_size)
+        pass
+    finally:
+        print_stats(status_code_counts, total_file_size)
 
 
 if __name__ == "__main__":
-    process_input()
+    main()
