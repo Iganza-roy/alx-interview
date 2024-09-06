@@ -15,6 +15,7 @@ request(apiUrl, (error, response, body) => {
     console.error(`Failed to fetch movie: ${response.statusCode}`);
     return;
   }
+
   const movieData = JSON.parse(body);
   const characters = movieData.characters;
 
