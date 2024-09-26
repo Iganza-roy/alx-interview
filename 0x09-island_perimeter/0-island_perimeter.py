@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 "creating a funtiong returns the perimeter of the island described in grid"
 
 
@@ -26,19 +25,3 @@ def island_perimeter(grid):
                 if (k > 0 and grid[i][k - 1] == 1):
                     perim -= 2
     return perim
-
-
-
-grid = [
-        [0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0],
-        [0, 1, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-    ]
-
-print(island_perimeter(grid))
-            
-            
-
-
