@@ -1,4 +1,15 @@
+#!/usr/bin/python3
+"""prime game
+"""
+
 def isWinner(x, nums):
+    """
+    Determine who the winner is for each round of the game.
+    
+    x: number of rounds
+    nums: list of n values for each round
+    """
+    
     max_n = max(nums)
     primes = [True] * (max_n + 1)
     primes[0] = primes[1] = False
