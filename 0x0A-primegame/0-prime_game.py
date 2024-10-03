@@ -1,38 +1,35 @@
-#!/usr/bin/python3
-
-def sieve_of_eratosthenes(n):
-    """Generate a list of prime numbers up
-    to n using the Sieve of Eratosthenes.
-    """
-    primes = [True] * (n + 1)
-    primes[0] = primes[1] = False
-    for i in range(2, int(n**0.5) + 1):
-        if primes[i]:
-            for j in range(i * i, n + 1, i):
-                primes[j] = False
-    return primes
-
-
 def isWinner(x, nums):
-    """
-    Determine who the winner is for each round of the game.
-    x: number of rounds
-    nums: list of n values for each round
-    """
-    if not nums or x < 1:
-        return None
     max_n = max(nums)
-    primes = sieve_of_eratosthenes(max_n)
-    prime_removals = [0] * (max_n + 1)
-    for i in range(1, max_n + 1):
-        prime_removals[i] = prime_removals[i - 1] + primes[i]
-    maria_wins = 0
-    ben_wins = 0
+    primes = [True] * (max_n + 1)
+    primes[0] = primes[1] = False
+    for i in range(2, int(max_n**0.5) + 1):
+        if primes[i]:
+            for j in range(i * i, max_n + 1, i):
+                primes[j] = False
+
+    maria_wins, ben_wins = 0, 0
+
     for n in nums:
-        if prime_removals[n] % 2 == 0:
+        available_numbers = set(range(2, n + 1))
+        maria_turn = True
+        while available_numbers:
+            prime_found = False
+            for num in sorted(available_numbers):
+                if primes[num]:
+                    prime_found = True
+                    available_numbers -= set(range(num, n + 1, num))
+                    break
+
+            if not prime_found:
+                break
+
+            maria_turn = not maria_turn
+
+        if maria_turn:
             ben_wins += 1
         else:
             maria_wins += 1
+
     if maria_wins > ben_wins:
         return "Maria"
     elif ben_wins > maria_wins:
