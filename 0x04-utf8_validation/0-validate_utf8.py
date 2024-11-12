@@ -4,7 +4,6 @@
 UTF-8 validation
 """
 
-
 def validUTF8(data):
     """
     Validates UTF-8 data.
@@ -21,7 +20,6 @@ def validUTF8(data):
     # Convert data to bytes if not already in the form of integers
     bytes = [int.from_bytes(data[i:i+1],
                             byteorder='big')for i in range(0, len(data), 1)]
-
     count = 0
 
     for byte in bytes:
