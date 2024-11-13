@@ -13,7 +13,7 @@ def island_perimeter(grid):
                 One cell is a square with side length 1
                 Grid cells are connected horizontally
                 or vertically (not diagonally).
-                Grid is rectangular, width and height don’t exceed 100
+                Grid is rectangular, width and height do not exceed 100
     """
     perim = 0
 
